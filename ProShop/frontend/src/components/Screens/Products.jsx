@@ -13,11 +13,11 @@ function Products({ p }) {
           <Card.Img variant="top" src={p.image} />
         </Link>
         <Card.Body>
-          <Link to={`/${p._id}`}>
+          <Link to={`/${p._id}`} style={{ textDecoration: "none" }}>
             <Card.Title> {p.name}</Card.Title>
           </Link>
-          <Card.Text as="h4" className="my-5">
-            ${p.price}
+          <Card.Text as="h4" className="my-3">
+            &#8377; {p.price}
           </Card.Text>
           <Card.Text>
             <Rating value={p.rating} text={`${p.numReviews}`} />

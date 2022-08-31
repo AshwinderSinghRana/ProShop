@@ -32,8 +32,8 @@ async function updateProduct(req, res) {
 
 async function getProduct(req, res) {
   try {
-    let result = await Product.find({ _id: req.params.id });
-    res.status(200).send({ success: "true", result });
+    let result = await Product.findOne({ _id: req.params.id });
+    res.status(200).send( result );
   } catch (error) {
     res.status(400).send(error.message);
   }

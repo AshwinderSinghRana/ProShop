@@ -8,6 +8,7 @@ import { Container } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
 import ProjectScreen from "./components/Screens/ProjectScreen";
 import Login from "./components/Screens/Login";
+import CartScreen from "./components/Screens/CartScreen";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -23,6 +24,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<HomeScreen />} />
               <Route path="/:id" element={<ProjectScreen />} />
+              <Route path="/cart/:id" element={<CartScreen />} />
             </Route>
           </Routes>
         </Container>

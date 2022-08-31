@@ -1,25 +1,35 @@
 import { React, useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
-import Products from "./Products";
-import { httpGet } from "../../../config/AxiosConfig";
+import Products from '../Screens/Products';
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../../../REDUX/actions/productAction";
+import Loading from "../../Loading";
+import Message from "../../Message";
 
 function HomeScreen() {
-  const [products, setProduct] = useState(null);
+  const dispatch = useDispatch();
+
+  const productList = useSelector((state) => state.productList);
+  const { products, error, loading } = productList;
   useEffect(() => {
-    httpGet("/products")
-      .then((res) => setProduct(res.data))
-      .catch((er) => console.log(er.message));
-  }, []);
+    dispatch(listProducts());
+  }, [dispatch]);
 
   return (
     <main>
-      <Row>
-        {products?.map((p) => (
-          <Col md={3}>
-            <Products p={p} />
-          </Col>
-        ))}
-      </Row>
+      {loading ? (
+        <Loading />
+      ) : error ? (
+        <Message variant="danger">{error}</Message>
+      ) : (
+        <Row>
+          {products?.map((p) => (
+            <Col md={3}>
+              <Products p={p} />
+            </Col>
+          ))}
+        </Row>
+      )}
     </main>
   );
 }
