@@ -4,8 +4,6 @@ import Rating from "./Rating";
 import { useNavigate, Link } from "react-router-dom";
 
 function Products({ p }) {
-  let Navigate = useNavigate();
-
   return (
     <div>
       <Card className="my-3 p-3">
