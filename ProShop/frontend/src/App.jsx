@@ -25,6 +25,7 @@ function App() {
               <Route path="/" element={<HomeScreen />} />
               <Route path="/:id" element={<ProjectScreen />} />
               <Route path="/cart/:id" element={<CartScreen />} />
+              <Route path="/cart" element={<CartScreen />} />
             </Route>
           </Routes>
         </Container>

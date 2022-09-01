@@ -40,7 +40,7 @@ function Header() {
                   textDecoration: "none",
                 }}
               >
-                <i class="fa-solid fa-cart-arrow-down"></i>Cart
+                <i className="fa-solid fa-cart-arrow-down"></i>Cart
               </NavLink>
               <NavLink
                 className="px-3"
