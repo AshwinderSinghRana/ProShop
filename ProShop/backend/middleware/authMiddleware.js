@@ -1,17 +1,28 @@
-import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken"
+import asyncHandler from "express-async-handler"
+import User from "../models/userModel.js"
 
-const protect = async (req, res, next) => {
-  let token = req.headers.token;
-  try {
-    let result = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    let duration = parseInt(new Date().getTime() / 1000 - result.iat);
-    if (duration > result.expiresIn) {
-      res.send("Token Has Expired Plz Login again");
-    } else {
-      next();
+
+const authMiddleware = asyncHandler (async(req, res, next) => {
+    let token
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer"))
+    {
+        try {
+         token=req.headers.authorization.split("")[1]
+            const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
+
+            req.user = await User.findById(decoded.id).select("passsword")
+            next()
+     } catch (error) {
+            console.error(error)
+            res.status(401)
+            throw new Error
+     }
     }
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-};
-export default protect;
+    if (!token) {
+        res.status(401)
+        throw new Error("Not authorized ,no token")
+    }
+        next()
+})
+export {authMiddleware}

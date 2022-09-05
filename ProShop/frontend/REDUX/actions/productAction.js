@@ -37,7 +37,9 @@ const detailProducts = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAILS_FAILURE,
-      payload: error,
+      payload:error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
     });
   }
 };

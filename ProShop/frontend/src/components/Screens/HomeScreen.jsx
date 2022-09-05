@@ -24,8 +24,8 @@ function HomeScreen() {
       ) : (
         <Row>
           {products?.map((p) => (
-            <Col md={3}>
-              <Products p={p} />
+            <Col key={p._id} md={3}>
+              <Products key={p._id} p={p} />
             </Col>
           ))}
         </Row>

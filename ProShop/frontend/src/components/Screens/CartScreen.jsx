@@ -7,7 +7,6 @@ import {
   Form,
   Image,
   ListGroup,
-  ListGroupItem,
   Row,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +23,6 @@ function CartScreen() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-  console.log(cartItems);
   useEffect(() => {
     if (ID) {
       dispatch(addToCart(ID, qty));
@@ -102,7 +100,8 @@ function CartScreen() {
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h2>
-                  Subtotal({cartItems.reduce((acc, item) =>  acc +Number(item.qty) , 0)})
+                  Subtotal(
+                  {cartItems.reduce((acc, item) => acc + Number(item.qty), 0)})
                   items
                 </h2>
                 &#8377;

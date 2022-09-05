@@ -1,39 +1,85 @@
-import User from "../models/userModel.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import asyncHandler from "express-async-handler"
+import User from "../models/userModel.js"
+import { generateToken } from "../utilis/generateToken.js"
+import bcrypt from "bcrypt"
 
-async function verifyUser(req, res) {
-  let { email, password } = req.body;
-  try {
-    let result = await User.findOne({
-      email,
-    });
-    if (!result) {
-      res.send("User not found");
-    } else {
-      let decoded = await bcrypt.compare(password, result.password);
-      if (!decoded) {
-        res.send("Invalid email or password");
-      } else {
-        let token = jwt.sign(
-          { result, expiresIn: 120 },
-          process.env.JWT_SECRET_KEY
-        );
-        res.status(200).send({ message: "Login succesfull", token });
-      }
-    }
-  } catch (error) {
-    res.status(400).send(error.message);
+
+const verifyUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body
+  
+  const user = await User.findOne({
+    email
+  })
+  if (user&&(await bcrypt.compare(password,user.password))) {
+    res.json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      isVerified: user.isVerified,
+      token:generateToken(user._id)
+    })
   }
-}
+  else {
+    res.status(401)
+    throw new Error("Invalid email or password")
+  }
+})
 
-// async function createUser(req, res) {
-//   try {
-//     let result = await User.create(req.body);
-//     res.status(201).send({ success: "true", result });
-//   } catch (error) {
-//     res.status(400).send(error.message);
-//   }
-// }
 
-export { verifyUser };
+
+
+
+const registerUser = asyncHandler(async (req, res) => {
+  const {name, email, password } = req.body
+  
+  const userExists = await User.findOne({
+    email
+  })
+  if (userExists) {
+    res.status(400)
+    throw new Error("User already exist")
+  }
+  const user = await User.create({
+    name,email,password
+  })
+  if (user) {
+    res.status(201).json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      isVerified: user.isVerified,
+      token:generateToken(user._id)
+    })
+  } else {
+    res.status(400)
+    throw new Error("Invalid user data")
+  }
+})
+
+
+
+
+
+
+const getUserProfile = asyncHandler(async (req, res) => {
+  
+  
+  const user = await User.findById(req.user._id)
+  if (user) {
+    res.json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      
+    })
+  
+  }
+  else {
+    res.status(404)
+    throw new Error("User not found")
+  }
+})
+export {verifyUser,getUserProfile,registerUser}
