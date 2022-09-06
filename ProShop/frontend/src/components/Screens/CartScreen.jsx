@@ -72,6 +72,7 @@ function CartScreen() {
                             addToCart(item.product, Number(e.target.value))
                           )
                         }
+                        style={{ WebkitAppearance: " menulist" }}
                       >
                         {[...Array(item.countInStock).keys()].map((x) => (
                           <option key={x + 1} value={x + 1}>

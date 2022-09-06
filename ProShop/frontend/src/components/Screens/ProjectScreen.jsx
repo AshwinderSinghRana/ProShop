@@ -76,6 +76,7 @@ function ProjectScreen() {
                         as="select"
                         value={qty}
                         onChange={(e) => setQty(e.target.value)}
+                        style={{ WebkitAppearance: " menulist" }}
                       >
                         {[...Array(product.countInStock).keys()].map((x) => (
                           <option key={x + 1} value={x + 1}>

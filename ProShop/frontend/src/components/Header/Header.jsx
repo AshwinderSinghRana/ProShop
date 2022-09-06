@@ -36,11 +36,11 @@ function Header() {
               </LinkContainer>
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id="username">
-                  <NavLink to={"/profile"}>
+                  <LinkContainer to={"/profile"}>
                     <NavDropdown.Item>
                       <i className="fa-solid fa-user"></i> Profile
                     </NavDropdown.Item>
-                  </NavLink>
+                  </LinkContainer>
                   <NavDropdown.Item onClick={(e) => dispatch(logoutHandler())}>
                     <i className="fa-solid fa-right-from-bracket"></i> Logout
                   </NavDropdown.Item>

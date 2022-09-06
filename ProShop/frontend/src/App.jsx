@@ -10,6 +10,7 @@ import ProjectScreen from "./components/Screens/ProjectScreen";
 import { Login } from "../src/components/Screens/Login";
 import CartScreen from "./components/Screens/CartScreen";
 import { RegisterScreen } from "./components/Screens/RegisterScreen";
+import { ProfileScreen } from "./components/Screens/ProfileScreen";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -24,6 +25,7 @@ function App() {
             <Route>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<RegisterScreen />} />
+              <Route path="/profile" element={<ProfileScreen />} />
               <Route path="/" element={<HomeScreen />} />
               <Route path="/:id" element={<ProjectScreen />} />
               <Route path="/cart/:id" element={<CartScreen />} />

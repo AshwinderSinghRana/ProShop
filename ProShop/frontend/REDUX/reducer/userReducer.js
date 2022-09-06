@@ -1,4 +1,7 @@
 import {
+  USER_DETAILS_FAILURE,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
   USER_LOGIN_FAILURE,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -6,6 +9,9 @@ import {
   USER_REGISTER_FAILURE,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_UPDATE_PROFILE_FAILURE,
+  USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS,
 } from "../constants/userConstatnt";
 
 export function userLoginReducer(state = {}, action) {
@@ -38,6 +44,43 @@ export function userRegisterReducer(state = {}, action) {
         error: "",
       };
     case USER_REGISTER_FAILURE:
+      return { loading: false, error: action.payload };
+    
+    default:
+      return state;
+  }
+}
+
+export function userDetailReducer(state = {user:{}}, action) {
+  switch (action.type) {
+    case USER_DETAILS_REQUEST:
+      return { ...state,loading: true };
+    case USER_DETAILS_SUCCESS:
+      return {
+        loading: false,
+        user: action.payload,
+        error: "",
+      };
+    case USER_DETAILS_FAILURE:
+      return { loading: false, error: action.payload };
+    
+    default:
+      return state;
+  }
+}
+
+export function userUpdateProfileReducer(state = {user:{}}, action) {
+  switch (action.type) {
+    case USER_UPDATE_PROFILE_REQUEST:
+      return { ...state,loading: true };
+    case USER_UPDATE_PROFILE_SUCCESS:
+      return {
+        loading: false,
+        success:true,
+        userInfo: action.payload,
+        error: "",
+      };
+    case USER_UPDATE_PROFILE_FAILURE:
       return { loading: false, error: action.payload };
     
     default:

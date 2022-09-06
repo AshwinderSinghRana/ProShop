@@ -1,48 +1,44 @@
-import asyncHandler from "express-async-handler"
-import User from "../models/userModel.js"
-import { generateToken } from "../utilis/generateToken.js"
-import bcrypt from "bcrypt"
-
+import asyncHandler from "express-async-handler";
+import User from "../models/userModel.js";
+import { generateToken } from "../utilis/generateToken.js";
+import bcrypt from "bcrypt";
 
 const verifyUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body
-  
+  const { email, password } = req.body;
+
   const user = await User.findOne({
-    email
-  })
-  if (user&&(await bcrypt.compare(password,user.password))) {
+    email,
+  });
+  if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
       id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
       isVerified: user.isVerified,
-      token:generateToken(user._id)
-    })
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid email or password");
   }
-  else {
-    res.status(401)
-    throw new Error("Invalid email or password")
-  }
-})
-
-
-
-
+});
 
 const registerUser = asyncHandler(async (req, res) => {
-  const {name, email, password } = req.body
-  
+  const { name, email, password } = req.body;
+
   const userExists = await User.findOne({
-    email
-  })
+    email,
+  });
   if (userExists) {
-    res.status(400)
-    throw new Error("User already exist")
+    res.status(400);
+    throw new Error("User already exist");
   }
   const user = await User.create({
-    name,email,password
-  })
+    name,
+    email,
+    password,
+  });
   if (user) {
     res.status(201).json({
       id: user._id,
@@ -50,36 +46,52 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       isVerified: user.isVerified,
-      token:generateToken(user._id)
-    })
+      token: generateToken(user._id),
+    });
   } else {
-    res.status(400)
-    throw new Error("Invalid user data")
+    res.status(400);
+    throw new Error("Invalid user data");
   }
-})
+});
 
+const getUserProfile =asyncHandler( async (req, res) => {
+  const user = await User.findById(req.user._id);
 
-
-
-
-
-const getUserProfile = asyncHandler(async (req, res) => {
-  
-  
-  const user = await User.findById(req.user._id)
   if (user) {
     res.json({
-      id: user._id,
+      id: user.id,
       name: user.name,
       email: user.email,
+      isVerified: user.isVerified,
       isAdmin: user.isAdmin,
-      
-    })
-  
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
   }
-  else {
-    res.status(404)
-    throw new Error("User not found")
+});
+
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+    const updateUser = await user.save();
+    res.send({
+      id: updateUser.id,
+      name: updateUser.name,
+      email: updateUser.email,
+      isAdmin: updateUser.isAdmin,
+      isVerified: updateUser.isVerified,
+    });
+  } else {
+    res.status(400);
+    throw new Error("User not Updated");
   }
-})
-export {verifyUser,getUserProfile,registerUser}
+});
+
+export { verifyUser, getUserProfile, registerUser, updateUserProfile };
