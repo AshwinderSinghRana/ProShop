@@ -113,9 +113,9 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       userLogin: { userInfo },
     } = getState();
   
-    const { data } = await httpPost.put(`/user/profile`, user, config, {
+    const { data } = await httpPost.put(`/user/profile`, user, {
       headers: {
-        "Authorization":`Bearer ${userInfo?.token}`
+        Authorization:`Bearer ${userInfo?.token}`
   } })
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,

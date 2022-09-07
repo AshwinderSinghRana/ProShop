@@ -33,9 +33,7 @@ function CartScreen() {
     dispatch(removeFromCart(id));
   };
   const checkOutHandler = () => {
-    navigate({
-      pathname: `/login?redirect=shipping`,
-    });
+    navigate( `/login?redirect=/shipping`);
   };
   return (
     <div>
@@ -60,7 +58,7 @@ function CartScreen() {
                       ></Image>
                     </Col>
                     <Col md={3}>
-                      <Link to={`/product/${item.product}`}>{item.name}</Link>
+                      <Link to={`/${item.product}`}>{item.name}</Link>
                     </Col>
                     <Col md={2}>&#8377;{item.price} </Col>
                     <Col md={2}>

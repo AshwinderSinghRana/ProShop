@@ -6,6 +6,7 @@ import colors from "colors";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoute.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
+import routerOrder from "./routes/orderRoute.js";
 
 dotenv.config();
 const app = express();
@@ -16,6 +17,7 @@ connectDB();
 
 app.use("/products", productRoutes);
 app.use("/user", userRoutes);
+app.use("/order", routerOrder);
 app.use(notFound);
 app.use(errorHandler);
 const port = process.env.PORT;

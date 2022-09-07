@@ -32,10 +32,10 @@ export const ProfileScreen = () => {
     if (!userInfo) {
       navigate("/login");
     } else {
-      if (!user||!user.name) {
+      if (!user || !user.name) {
         dispatch(getUserDetails("profile"));
       } else {
-          setUserData({
+        setUserData({
           name: user.name,
           email: user.email,
         });
@@ -48,7 +48,7 @@ export const ProfileScreen = () => {
     if (userData?.password !== userData?.confirmPassword) {
       setMessage("Password do not match");
     } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, password }));
+      dispatch(updateUserProfile({ ...userData, id: user.id }));
     }
   };
   return (
@@ -64,15 +64,20 @@ export const ProfileScreen = () => {
             <Form.Label>Name </Form.Label>
             <Form.Control
               type="name"
-                          name="name"
-                          value={userData?.name}
+              name="name"
+              value={userData?.name}
               onChange={handleChange}
               placeholder="Enter Your Name"
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="email">
             <Form.Label>Email </Form.Label>
-            <Form.Control type="email" name="email" value={userData?.email} placeholder="Enter email" />
+            <Form.Control
+              type="email"
+              name="email"
+              value={userData?.email}
+              placeholder="Enter email"
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="password">

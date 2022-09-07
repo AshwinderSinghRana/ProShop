@@ -69,7 +69,7 @@ export function userDetailReducer(state = {user:{}}, action) {
   }
 }
 
-export function userUpdateProfileReducer(state = {user:{}}, action) {
+export function userUpdateProfileReducer(state = {}, action) {
   switch (action.type) {
     case USER_UPDATE_PROFILE_REQUEST:
       return { ...state,loading: true };

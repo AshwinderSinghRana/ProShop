@@ -6,7 +6,13 @@ import {
 } from "../reducer/productReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { cartReducer } from "../reducer/cartReducer";
-import { userDetailReducer, userLoginReducer, userRegisterReducer, userUpdateProfileReducer } from "../reducer/userReducer";
+import {
+  userDetailReducer,
+  userLoginReducer,
+  userRegisterReducer,
+  userUpdateProfileReducer,
+} from "../reducer/userReducer";
+import { orderCreateReducer } from "../reducer/orderReducer";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -15,7 +21,8 @@ const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailReducer,
-  userUpdateProfile:userUpdateProfileReducer
+  userUpdateProfile: userUpdateProfileReducer,
+  orderCreate: orderCreateReducer,
 });
 
 const cartItemFromStorage = localStorage.getItem("cartItems")
@@ -25,11 +32,22 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
 
+const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
+  ? JSON.parse(localStorage.getItem("shippingAddress"))
+  : {};
+
+const paymentMethodFromStorage = localStorage.getItem("paymentMethod")
+  ? JSON.parse(localStorage.getItem("paymentMethod"))
+  : "";
 const initialState = {
-  cart: { cartItems: cartItemFromStorage },
+  cart: {
+    cartItems: cartItemFromStorage,
+    shippingAddress: shippingAddressFromStorage,
+  },
   userLogin: {
     userInfo: userInfoFromStorage,
   },
+  paymentMethod: paymentMethodFromStorage,
 };
 const middleware = [thunk];
 

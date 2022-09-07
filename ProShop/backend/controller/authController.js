@@ -34,10 +34,11 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("User already exist");
   }
+  let hash = await bcrypt.hash(password, 10);
   const user = await User.create({
     name,
     email,
-    password,
+    password: hash,
   });
   if (user) {
     res.status(201).json({
@@ -54,7 +55,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-const getUserProfile =asyncHandler( async (req, res) => {
+const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
@@ -78,8 +79,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.email = req.body.email || user.email;
 
     if (req.body.password) {
-      user.password = req.body.password;
+      let hash = await bcrypt.hash(req.body.password, 10);
+      user.password = hash;
     }
+
     const updateUser = await user.save();
     res.send({
       id: updateUser.id,
