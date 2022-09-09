@@ -15,8 +15,10 @@ function ShippingScreen() {
   const [userData, setUserData] = useState({
     address: shippingAddress.address,
     city: shippingAddress.city,
-    postalCode: shippingAddress.postalCode,
     country: shippingAddress.country,
+    state: shippingAddress.state,
+    pincode: shippingAddress.pincode,
+    mobile: shippingAddress.mobile,
   });
 
   const handleChange = (e) => {
@@ -34,10 +36,21 @@ function ShippingScreen() {
       <CheckOutStep step1 step2 />
       <h1>Shipping</h1>
       <Form onSubmit={submitHandler}>
+        <Form.Group classaddress="mb-3" controlId="country">
+          <Form.Label>Country </Form.Label>
+          <Form.Control
+            type="text"
+            name="country"
+            value={userData?.country}
+            onChange={handleChange}
+            required
+            placeholder="Enter Your country"
+          />
+        </Form.Group>
         <Form.Group classaddress="mb-3" controlId="address">
           <Form.Label>Address </Form.Label>
           <Form.Control
-            type="address"
+            type="text"
             name="address"
             value={userData.address}
             onChange={handleChange}
@@ -46,10 +59,21 @@ function ShippingScreen() {
           />
         </Form.Group>
 
+        <Form.Group classaddress="mb-3" controlId="state">
+          <Form.Label>State </Form.Label>
+          <Form.Control
+            type="text"
+            name="state"
+            value={userData?.state}
+            onChange={handleChange}
+            required
+            placeholder="Enter Your state"
+          />
+        </Form.Group>
         <Form.Group classaddress="mb-3" controlId="city">
           <Form.Label>City </Form.Label>
           <Form.Control
-            type="city"
+            type="state"
             name="city"
             value={userData?.city}
             onChange={handleChange}
@@ -58,27 +82,26 @@ function ShippingScreen() {
           />
         </Form.Group>
 
-        <Form.Group classaddress="mb-3" controlId="postalCode">
-          <Form.Label>Postal Code </Form.Label>
+        <Form.Group classaddress="mb-3" controlId="pincode">
+          <Form.Label>PinCode </Form.Label>
           <Form.Control
-            type="postalCode"
-            name="postalCode"
-            value={userData?.postalCode}
+            type="text"
+            name="pincode"
+            value={userData?.pincode}
             onChange={handleChange}
             required
             placeholder="Enter Your postalCode"
           />
         </Form.Group>
-
-        <Form.Group classaddress="mb-3" controlId="country">
-          <Form.Label>Country </Form.Label>
+        <Form.Group classaddress="mb-3" controlId="mobile">
+          <Form.Label>Mobile </Form.Label>
           <Form.Control
-            type="country"
-            name="country"
-            value={userData?.country}
+            type="text"
+            name="mobile"
+            value={userData?.mobile}
             onChange={handleChange}
             required
-            placeholder="Enter Your country"
+            placeholder="Enter Your Mobile"
           />
         </Form.Group>
 
