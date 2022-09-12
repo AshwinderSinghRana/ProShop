@@ -17,13 +17,23 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
 
       next();
     } catch (error) {
-        res.status(400)
-            throw new Error("Session has expired ...Please Login again");//it will give error in profileScreen
+      res.status(400);
+      throw new Error("Session has expired ...Please Login again"); //it will give error in profileScreen
     }
   }
   if (!token) {
-      res.status(401)
-          throw new Error("Not authorized ,no token");
+    res.status(401);
+    throw new Error("Not authorized ,no token");
   }
 });
-export { authMiddleware };
+
+const admin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Not authorized as an admin");
+  }
+};
+
+export { authMiddleware, admin };

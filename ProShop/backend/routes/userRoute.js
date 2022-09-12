@@ -6,20 +6,27 @@ import {
   verifyUser,
 } from "../controller/authController.js";
 import {
+  createUser,
   deleteUser,
-  getAllUser,
   getUser,
+  getUserById,
+  getUsers,
   updateUser,
 } from "../controller/userController.js";
-import { authMiddleware } from "../middleware/authMiddleware.js";
+import { admin, authMiddleware } from "../middleware/authMiddleware.js";
 
 const routerUser = express.Router();
 
-
-routerUser.delete("/:id", deleteUser);
+routerUser.route("/getUsers").get(authMiddleware, admin, getUsers);
+routerUser
+  .route("/:id")
+  .delete(authMiddleware, admin, deleteUser)
+  .get(authMiddleware, admin, getUserById)
+  .put(authMiddleware, admin, updateUser);
 routerUser.put("/update/:id", updateUser);
+routerUser.post("/create", createUser);
 routerUser.get("/getUser/:id", getUser);
-routerUser.route("/getUsers/").get(authMiddleware,getAllUser);
+// routerUser.route("/getAllUsers/").get(authMiddleware, getAllUser);
 routerUser.post("/login", verifyUser);
 routerUser
   .route("/profile")

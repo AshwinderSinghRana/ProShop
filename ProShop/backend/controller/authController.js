@@ -97,4 +97,32 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { verifyUser, getUserProfile, registerUser, updateUserProfile };
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+
+    user.isAdmin = req.body.isAdmin || user.isAdmin;
+
+    const updateUser = await user.save();
+    res.send({
+      id: updateUser.id,
+      name: updateUser.name,
+      email: updateUser.email,
+      isAdmin: updateUser.isAdmin,
+      isVerified: updateUser.isVerified,
+    });
+  } else {
+    res.status(400);
+    throw new Error("User not Updated");
+  }
+});
+
+export {
+  verifyUser,
+  getUserProfile,
+  registerUser,
+  updateUserProfile,
+  updateUser,
+};

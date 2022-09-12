@@ -64,5 +64,13 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     throw new Error("Order Not Found");
   }
 });
+const MyOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.user._id });
+  if (orders) res.json(orders);
+  else {
+    res.status(404);
+    throw new Error("Order List Empty");
+  }
+});
 
-export { addOrderItem, getOrderById, updateOrderToPaid };
+export { addOrderItem, getOrderById, updateOrderToPaid, MyOrders };

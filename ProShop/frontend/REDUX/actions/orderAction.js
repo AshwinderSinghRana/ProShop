@@ -1,4 +1,4 @@
-import { httpPost } from "../../config/AxiosConfig";
+import { httpGet, httpPost } from "../../config/AxiosConfig";
 import {
   ORDER_CREATE_FAILURE,
   ORDER_CREATE_REQUEST,
@@ -6,6 +6,9 @@ import {
   ORDER_DETAILS_FAILURE,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
+  ORDER_LIST_MY_FAILURE,
+  ORDER_LIST_MY_REQUEST,
+  ORDER_LIST_MY_SUCCESS,
   ORDER_PAY_FAILURE,
   ORDER_PAY_REQUEST,
   ORDER_PAY_SUCCESS,
@@ -104,3 +107,36 @@ export const payOrder =
       });
     }
   };
+
+export const listMyOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_LIST_MY_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const { data } = await httpGet(
+      `/order/myOrders`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo?.token}`,
+        },
+      }
+    );
+    dispatch({
+      type: ORDER_LIST_MY_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_LIST_MY_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

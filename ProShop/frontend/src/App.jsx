@@ -16,6 +16,7 @@ import PaymentScreen from "./components/Screens/PaymentScreen";
 import PlaceOrderScreen from "./components/Screens/PlaceOrderScreen";
 import Products from "./components/Screens/Products";
 import { GetOrderDetails } from "../src/components/Screens/OrderScreen";
+import UserListScreen from "./components/Screens/UserListScreen";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -39,6 +40,7 @@ function App() {
               <Route path="/:id" element={<ProjectScreen />} />
               <Route path="/project/:id" element={<ProjectScreen />} />
               <Route path="/cart/:id" element={<CartScreen />} />
+              <Route path="/admin/userlist" element={<UserListScreen />} />
               <Route path="/cart" element={<CartScreen />} />
             </Route>
           </Routes>
