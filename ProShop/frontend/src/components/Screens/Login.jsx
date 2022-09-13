@@ -9,7 +9,6 @@ import FormContainer from "../FormContainer/FormConatiner";
 
 export const Login = () => {
   const [userData, setUserData] = useState();
-
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -18,21 +17,21 @@ export const Login = () => {
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   const submitHandler = (e) => {
-    
     e.preventDefault();
-    //dispatch login
     dispatch(login(userData));
   };
+
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
-    console.log(userInfo)
+    console.log(userInfo);
     if (userInfo) {
       navigate(redirect);
     }
   }, [navigate, userInfo, redirect]);
+
   return (
     <FormContainer>
       <h1>Sign In</h1>
@@ -42,9 +41,7 @@ export const Login = () => {
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email </Form.Label>
           <Form.Control type="email" name="email" placeholder="Enter email" />
-         
         </Form.Group>
-
         <Form.Group className="mb-3" controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -53,7 +50,6 @@ export const Login = () => {
             placeholder="Password"
           />
         </Form.Group>
-
         <Button variant="primary" type="submit">
           Sign In
         </Button>

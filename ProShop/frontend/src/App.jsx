@@ -1,5 +1,3 @@
-import { useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -14,17 +12,14 @@ import { ProfileScreen } from "./components/Screens/ProfileScreen";
 import ShippingScreen from "./components/Screens/ShippingScreen";
 import PaymentScreen from "./components/Screens/PaymentScreen";
 import PlaceOrderScreen from "./components/Screens/PlaceOrderScreen";
-import Products from "./components/Screens/Products";
 import { GetOrderDetails } from "../src/components/Screens/OrderScreen";
 import UserListScreen from "./components/Screens/UserListScreen";
+import { UserEditScreen } from "./components/Screens/UserEditScreen";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div>
       <Header />
-
       <main className="py-3">
         <Container>
           <Routes>
@@ -41,6 +36,7 @@ function App() {
               <Route path="/project/:id" element={<ProjectScreen />} />
               <Route path="/cart/:id" element={<CartScreen />} />
               <Route path="/admin/userlist" element={<UserListScreen />} />
+              <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
               <Route path="/cart" element={<CartScreen />} />
             </Route>
           </Routes>

@@ -8,15 +8,15 @@ import FormContainer from "../FormContainer/FormConatiner";
 
 function PaymentScreen() {
   const [userData, setUserData] = useState();
+  const [paymentMethod, setPaymentMethod] = useState("PayPal");
   const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { shippingAddress } = cart;
+
   if (!shippingAddress) {
     navigate("/shipping");
   }
-  const navigate = useNavigate();
-  const [paymentMethod, setPaymentMethod] = useState("PayPal");
-
-  const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -24,9 +24,10 @@ function PaymentScreen() {
     navigate("/placeorder");
   };
 
-  const handleChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
-  };
+  // const handleChange = (e) => {
+  //   setUserData({ ...userData, [e.target.name]: e.target.value });
+  // };
+
   return (
     <FormContainer>
       <CheckOutStep step1 step2 step3 />
@@ -34,7 +35,6 @@ function PaymentScreen() {
       <Form onSubmit={submitHandler}>
         <Form.Group>
           <Form.Label as="legend">Select Method</Form.Label>
-
           <Col>
             <Form.Check
               type="radio"

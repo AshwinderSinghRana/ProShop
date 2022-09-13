@@ -11,18 +11,15 @@ import routerOrder from "./routes/orderRoute.js";
 dotenv.config();
 const app = express();
 app.use(cors());
-
-app.use(express.json());
 connectDB();
 
+app.use(express.json());
 app.use("/products", productRoutes);
 app.use("/user", userRoutes);
 app.use("/order", routerOrder);
-
 app.use("/config/paypal", (req, res) =>
   res.send(process.env.PAY_PAL_CLIENT_ID)
 );
-
 app.use(notFound);
 app.use(errorHandler);
 const port = process.env.PORT;

@@ -1,5 +1,8 @@
 import { httpGet, httpPost } from "../../config/AxiosConfig";
 import {
+  GET_USER_DETAIL_ADMIN_FAILURE,
+  GET_USER_DETAIL_ADMIN_REQUEST,
+  GET_USER_DETAIL_ADMIN_SUCCESS,
   USER_DELETE_FAILURE,
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
@@ -16,9 +19,12 @@ import {
   USER_REGISTER_FAILURE,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_UPDATE_FAILURE,
   USER_UPDATE_PROFILE_FAILURE,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
 } from "../constants/userConstatnt";
 
 export const login = (userData) => async (dispatch) => {
@@ -31,7 +37,6 @@ export const login = (userData) => async (dispatch) => {
       type: USER_LOGIN_SUCCESS,
       payload: data,
     });
-
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
@@ -176,8 +181,7 @@ export const deleteUsers = (id) => async (dispatch, getState) => {
     const {
       userLogin: { userInfo },
     } = getState();
-
-    const { data } = await httpGet.delete(`/user/${id}`, {
+    await httpGet.delete(`/user/${id}`, {
       headers: {
         Authorization: `Bearer ${userInfo?.token}`,
       },
@@ -188,6 +192,65 @@ export const deleteUsers = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_DELETE_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateUser = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_UPDATE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const { data } = await httpPost.put(`/user/${user._id}`, user, {
+      headers: {
+        Authorization: `Bearer ${userInfo?.token}`,
+      },
+    });
+    dispatch({
+      type: USER_UPDATE_SUCCESS,
+    });
+    dispatch({
+      type: GET_USER_DETAIL_ADMIN_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getUserDetailsByAdmin = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_USER_DETAIL_ADMIN_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const { data } = await httpGet(`/user/${id}`, {
+      headers: {
+        Authorization: `Bearer ${userInfo?.token}`,
+      },
+    });
+    dispatch({
+      type: GET_USER_DETAIL_ADMIN_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_DETAIL_ADMIN_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

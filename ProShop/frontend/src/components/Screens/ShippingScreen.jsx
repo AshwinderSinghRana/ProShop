@@ -10,7 +10,6 @@ function ShippingScreen() {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const [userData, setUserData] = useState({
     address: shippingAddress.address,
@@ -58,7 +57,6 @@ function ShippingScreen() {
             placeholder="Enter Your address"
           />
         </Form.Group>
-
         <Form.Group classaddress="mb-3" controlId="state">
           <Form.Label>State </Form.Label>
           <Form.Control
@@ -81,7 +79,6 @@ function ShippingScreen() {
             placeholder="Enter Your city"
           />
         </Form.Group>
-
         <Form.Group classaddress="mb-3" controlId="pincode">
           <Form.Label>PinCode </Form.Label>
           <Form.Control
@@ -104,7 +101,6 @@ function ShippingScreen() {
             placeholder="Enter Your Mobile"
           />
         </Form.Group>
-
         <Button className="py-3 my-3" type="submit" variant="primary">
           Continue
         </Button>

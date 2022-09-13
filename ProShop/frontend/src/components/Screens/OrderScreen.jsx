@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { PayPalButton } from "react-paypal-button-v2";
-import {
-  Button,
-  Image,
-  Col,
-  ListGroup,
-  Row,
-  Card,
-  Alert,
-} from "react-bootstrap";
+import { Image, Col, ListGroup, Row, Card, Alert } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Message from "../../Message";
 import Loading from "../../Loading";
 import axios from "axios";
-
 import { payOrder, getOrderDetail } from "../../../REDUX/actions/orderAction";
 import { ORDER_PAY_RESET } from "../../../REDUX/constants/orderConstant";
 
@@ -28,7 +19,7 @@ export const GetOrderDetails = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const orderPay = useSelector((state) => state.orderPay);
-  const { loading: loadingPay, status: statusPay } = orderPay;
+  const { loading: loadingPay, success: statusPay } = orderPay;
 
   useEffect(() => {
     const addPaypalScript = async () => {

@@ -15,33 +15,28 @@ import LoadingNew from "../../LoadingNew";
 export const ProfileScreen = () => {
   const [userData, setUserData] = useState();
   const [message, setMessage] = useState(null);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
-
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile;
+  const orderListMy = useSelector((state) => state.orderListMy);
+  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
-
-  const orderListMy = useSelector((state) => state.orderListMy);
-  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
 
   useEffect(() => {
     if (!userInfo) {
       navigate("/login");
     } else {
       if (!user || !user.name) {
-        dispatch(getUserDetails("profile"));
         dispatch(listMyOrders());
+        dispatch(getUserDetails("profile"));
       } else {
         setUserData({
           name: user.name,
@@ -59,6 +54,7 @@ export const ProfileScreen = () => {
       dispatch(updateUserProfile({ ...userData, id: user.id }));
     }
   };
+
   return (
     <Row>
       <Col md={3}>
@@ -87,7 +83,6 @@ export const ProfileScreen = () => {
               placeholder="Enter email"
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="password">
             <Form.Label>Password</Form.Label>
             <Form.Control
@@ -104,7 +99,6 @@ export const ProfileScreen = () => {
               placeholder="Confirm Password"
             />
           </Form.Group>
-
           <Button variant="primary" type="submit">
             Update
           </Button>

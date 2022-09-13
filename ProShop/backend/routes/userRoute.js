@@ -11,27 +11,27 @@ import {
   getUser,
   getUserById,
   getUsers,
-  updateUser,
+  updateUserByAdmin,
 } from "../controller/userController.js";
 import { admin, authMiddleware } from "../middleware/authMiddleware.js";
 
 const routerUser = express.Router();
 
+routerUser
+  .route("/profile")
+  .get(authMiddleware, getUserProfile)
+  .put(authMiddleware, updateUserProfile);
 routerUser.route("/getUsers").get(authMiddleware, admin, getUsers);
 routerUser
   .route("/:id")
   .delete(authMiddleware, admin, deleteUser)
   .get(authMiddleware, admin, getUserById)
-  .put(authMiddleware, admin, updateUser);
-routerUser.put("/update/:id", updateUser);
+  .put(authMiddleware, admin, updateUserByAdmin);
+routerUser.put("/update/:id", updateUserByAdmin);
 routerUser.post("/create", createUser);
 routerUser.get("/getUser/:id", getUser);
 // routerUser.route("/getAllUsers/").get(authMiddleware, getAllUser);
 routerUser.post("/login", verifyUser);
-routerUser
-  .route("/profile")
-  .get(authMiddleware, getUserProfile)
-  .put(authMiddleware, updateUserProfile);
 routerUser.route("/register").post(registerUser);
 
 export default routerUser;

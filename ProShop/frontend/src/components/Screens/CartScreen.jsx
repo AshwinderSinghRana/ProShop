@@ -19,10 +19,10 @@ function CartScreen() {
   const location = useLocation().search;
   const qty = new URLSearchParams(location).get("qty");
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+
   useEffect(() => {
     if (ID) {
       dispatch(addToCart(ID, qty));
@@ -32,9 +32,11 @@ function CartScreen() {
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
+
   const checkOutHandler = () => {
-    navigate( `/login?redirect=/shipping`);
+    navigate(`/login?redirect=/shipping`);
   };
+
   return (
     <div>
       <Row>

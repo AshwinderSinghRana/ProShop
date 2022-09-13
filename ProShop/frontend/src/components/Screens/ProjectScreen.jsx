@@ -18,8 +18,7 @@ import Message from "../../Message.jsx";
 function ProjectScreen() {
   const navigate = useNavigate();
   const [qty, setQty] = useState(1);
-  let ID = useParams().id;
-
+  const ID = useParams().id;
   const dispatch = useDispatch();
   const productDetail = useSelector((state) => state.productDetail);
   const { product, error, loading } = productDetail;

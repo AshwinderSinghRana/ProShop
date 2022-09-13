@@ -11,12 +11,10 @@ function PlaceOrderScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
-
   //calculated price
   cart.itemPrice = Number(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   ).toFixed(2);
-
   cart.shippingPrice = Number(cart.itemPrice > 10000 ? 100 : 10).toFixed(2);
   cart.taxPrice = Number(Number(0.15 * cart.itemPrice).toFixed(2));
   cart.totalPrice = (

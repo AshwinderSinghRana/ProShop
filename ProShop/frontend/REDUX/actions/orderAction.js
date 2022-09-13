@@ -88,7 +88,6 @@ export const payOrder =
         paymentResult,
         {
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${userInfo?.token}`,
           },
         }

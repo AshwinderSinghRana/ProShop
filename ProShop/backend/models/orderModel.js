@@ -7,7 +7,6 @@ const orderSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
-
     orderItems: [
       {
         name: { type: String, required: true },
@@ -21,7 +20,6 @@ const orderSchema = mongoose.Schema(
         },
       },
     ],
-
     shippingAddress: {
       address: { type: String, required: true },
       city: { type: String, required: true },
@@ -30,7 +28,6 @@ const orderSchema = mongoose.Schema(
       country: { type: String, required: true },
       mobile: { type: Number, required: true },
     },
-
     paymentMethod: {
       type: String,
       required: true,

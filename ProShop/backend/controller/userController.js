@@ -20,6 +20,7 @@ async function createUser(req, res) {
 //     res.status(400).send(error.message);
 //   }
 // }
+
 async function getUser(req, res) {
   try {
     let result = await User.findById({ _id: req.params.id });
@@ -28,6 +29,7 @@ async function getUser(req, res) {
     res.status(400).send(error.message);
   }
 }
+
 // async function getAllUser(req, res) {
 //   try {
 //     let total = await User.find().count();
@@ -38,14 +40,17 @@ async function getUser(req, res) {
 //     res.status(400).send(error.message);
 //   }
 // }
-async function updateUser(req, res) {
+
+async function updateUserByAdmin(req, res) {
   try {
     let result = await User.findByIdAndUpdate({ _id: req.params.id }, req.body);
     res.status(200).send({ success: true, result });
+    console.log(req.body);
   } catch (error) {
     res.status(400).send(error.message);
   }
 }
+
 async function getUsers(req, res) {
   let users = await User.find();
   res.json(users);
@@ -72,4 +77,11 @@ async function getUserById(req, res) {
   }
 }
 
-export { createUser, deleteUser, getUser, updateUser, getUsers, getUserById };
+export {
+  createUser,
+  deleteUser,
+  getUser,
+  updateUserByAdmin,
+  getUsers,
+  getUserById,
+};

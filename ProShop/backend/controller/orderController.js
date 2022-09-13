@@ -1,7 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Order from "../models/orderModel.js";
 
-//create new order
 const addOrderItem = asyncHandler(async (req, res) => {
   const {
     orderItems,
@@ -54,7 +53,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
       id: req.body.id,
       status: req.body.sttus,
       update_time: req.body.update_time,
-      email_address: req.body.oayer.email_address,
+      email_address: req.body.payer.email_address,
     };
 
     const updatedOrder = await order.save();
@@ -64,6 +63,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     throw new Error("Order Not Found");
   }
 });
+
 const MyOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find({ user: req.user._id });
   if (orders) res.json(orders);

@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 
 const verifyUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
   const user = await User.findOne({
     email,
   });
@@ -26,7 +25,6 @@ const verifyUser = asyncHandler(async (req, res) => {
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-
   const userExists = await User.findOne({
     email,
   });
@@ -57,7 +55,6 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-
   if (user) {
     res.json({
       id: user.id,
@@ -77,12 +74,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-
     if (req.body.password) {
       let hash = await bcrypt.hash(req.body.password, 10);
       user.password = hash;
     }
-
     const updateUser = await user.save();
     res.send({
       id: updateUser.id,
@@ -102,9 +97,7 @@ const updateUser = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-
     user.isAdmin = req.body.isAdmin || user.isAdmin;
-
     const updateUser = await user.save();
     res.send({
       id: updateUser.id,

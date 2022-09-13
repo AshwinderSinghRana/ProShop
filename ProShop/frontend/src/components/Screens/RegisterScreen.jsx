@@ -10,7 +10,6 @@ import FormContainer from "../FormContainer/FormConatiner";
 export const RegisterScreen = () => {
   const [userData, setUserData] = useState();
   const [message, setMessage] = useState(null);
-
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,24 +18,25 @@ export const RegisterScreen = () => {
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   const handleChange = (e) => {
-      setUserData({ ...userData, [e.target.name]: e.target.value });
-    };
-    
-    useEffect(() => {
-        console.log(userInfo);
-        if (userInfo) {
-            navigate(redirect);
-        }
-    }, [navigate, userInfo, redirect]);
+    setUserData({ ...userData, [e.target.name]: e.target.value });
+  };
 
-    const submitHandler = (e) => {
-      e.preventDefault();
-      if (userData?.password !== userData?.confirmPassword) {
-        setMessage("Password do not match");
-      } else {
-        dispatch(register(userData));
-      }
-    };
+  useEffect(() => {
+    console.log(userInfo);
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [navigate, userInfo, redirect]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (userData?.password !== userData?.confirmPassword) {
+      setMessage("Password do not match");
+    } else {
+      dispatch(register(userData));
+    }
+  };
+
   return (
     <FormContainer>
       <h1>Sign Up</h1>
@@ -52,7 +52,6 @@ export const RegisterScreen = () => {
           <Form.Label>Email </Form.Label>
           <Form.Control type="email" name="email" placeholder="Enter email" />
         </Form.Group>
-
         <Form.Group className="mb-3" controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -69,7 +68,6 @@ export const RegisterScreen = () => {
             placeholder="Confirm Password"
           />
         </Form.Group>
-
         <Button variant="primary" type="submit">
           Register
         </Button>
