@@ -20,6 +20,10 @@ app.use("/order", routerOrder);
 app.use("/config/paypal", (req, res) =>
   res.send(process.env.PAY_PAL_CLIENT_ID)
 );
+
+app.use("/config/secretkey", (req, res) =>
+  res.send(process.env.CAPTCHA_SITE_KEY)
+);
 app.use(notFound);
 app.use(errorHandler);
 const port = process.env.PORT;

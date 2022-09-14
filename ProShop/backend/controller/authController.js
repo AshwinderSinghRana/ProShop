@@ -2,13 +2,26 @@ import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import { generateToken } from "../utilis/generateToken.js";
 import bcrypt from "bcrypt";
+import { Validator } from "node-input-validator";
+import { checkValidation, failed } from "../config/validator.js";
 
 const verifyUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({
-    email,
+  //Use of Validator......................
+  let v = new Validator(req.body, {
+    email: "required|email",
+    password: "required",
   });
-  if (user && (await bcrypt.compare(password, user.password))) {
+  let value = JSON.parse(JSON.stringify(v));
+  let errorResponse = await checkValidation(v);
+  if (errorResponse) {
+    return failed(res, errorResponse);
+  }
+  //Use of Validator......................
+
+  const user = await User.findOne({
+    email: value.inputs.email,
+  });
+  if (user && (await bcrypt.compare(value.inputs.password, user.password))) {
     res.json({
       id: user._id,
       name: user.name,

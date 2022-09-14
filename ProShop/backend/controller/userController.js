@@ -1,16 +1,44 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 
-async function createUser(req, res) {
-  let { password } = req.body;
-  let hash = await bcrypt.hash(password, 10);
+import { Validator } from "node-input-validator";
+import { checkValidation, failed } from "../config/validator.js";
+import expressAsyncHandler from "express-async-handler";
+
+const createUser = expressAsyncHandler(async (req, res) => {
+  //Use of Validator
+  let v = new Validator(req.body, {
+    name: "required",
+    email: "required|email",
+    password: "required",
+  });
+  let value = JSON.parse(JSON.stringify(v));
+  let errorResponse = await checkValidation(v);
+  if (errorResponse) {
+    return failed(res, errorResponse);
+  }
+
+  const userExist = await User.findOne({ email: value.inputs.email });
+  if (userExist) {
+    res.status(400);
+    throw new Error("User Already Exist");
+  }
+
+  let hash = await bcrypt.hash(value.inputs.password, 10);
   try {
-    let result = await User.create({ ...req.body, password: hash });
-    res.status(201).send({ success: "true", result });
+    let result = await User.create({ ...value.inputs, password: hash });
+    res
+      .status(201)
+      .send({
+        success: "New User Created",
+        name: result.name,
+        email: result.email,
+        isAdmin: result.isAdmin,
+      });
   } catch (error) {
     res.status(400).send(error.message);
   }
-}
+});
 
 // async function deleteUser(req, res) {
 //   try {
@@ -45,7 +73,6 @@ async function updateUserByAdmin(req, res) {
   try {
     let result = await User.findByIdAndUpdate({ _id: req.params.id }, req.body);
     res.status(200).send({ success: true, result });
-    console.log(req.body);
   } catch (error) {
     res.status(400).send(error.message);
   }
