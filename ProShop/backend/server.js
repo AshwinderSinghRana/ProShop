@@ -26,6 +26,20 @@ app.use("/config/secretkey", (req, res) =>
 );
 app.use(notFound);
 app.use(errorHandler);
+
+// //post route
+// router.post("/post", async (req, res) => {
+//   const { token } = req.body;
+//   await axios.post(
+//     `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SITE_KEY}&response=${token}`
+//   );
+
+// if (res.status(200)) {
+//   res.send("Human");
+// } else {
+//   res.send("Robot");
+// }
+// });
 const port = process.env.PORT;
 
 app.listen(port, () => {

@@ -1,4 +1,5 @@
 import express from "express";
+import { authenticateHeader } from "../config/keys.js";
 import {
   getUserProfile,
   registerUser,
@@ -31,7 +32,7 @@ routerUser.put("/update/:id", updateUserByAdmin);
 routerUser.post("/create", createUser);
 routerUser.get("/getUser/:id", getUser);
 // routerUser.route("/getAllUsers/").get(authMiddleware, getAllUser);
-routerUser.post("/login", verifyUser);
+routerUser.post("/login", authenticateHeader, verifyUser);
 routerUser.route("/register").post(registerUser);
 
 export default routerUser;

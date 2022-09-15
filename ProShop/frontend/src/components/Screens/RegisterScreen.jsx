@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useRef } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import ReCAPTCHA from "react-google-recaptcha";
+import Reaptcha from "reaptcha";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { register } from "../../../REDUX/actions/userAction";
@@ -10,6 +11,8 @@ import Message from "../../Message";
 import FormContainer from "../FormContainer/FormConatiner";
 
 export const RegisterScreen = () => {
+  const [captcha, setCaptcha] = useState();
+  const captchaRef = useRef();
   const [userData, setUserData] = useState();
   const [message, setMessage] = useState(null);
   const [siteKey, setSiteKey] = useState();
@@ -24,6 +27,16 @@ export const RegisterScreen = () => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
+  const verify = () => {
+    captchaRef.current
+      .getResponse()
+      .then((res) => setCaptcha(res))
+      .catch((err) => {
+        err.message;
+      });
+  };
+
+  ///recaptcha
   useEffect(() => {
     async function getSiteKey() {
       const { data: googleSiteKey } = await axios.get(
@@ -37,12 +50,22 @@ export const RegisterScreen = () => {
     }
   }, [navigate, redirect, userInfo]);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    if (userData?.password !== userData?.confirmPassword) {
-      setMessage("Password do not match");
-    } else {
-      dispatch(register(userData));
+    await axios
+      .post("http://localhost:1221/config/secretkey")
+      .then((res) => {
+        setCaptcha(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    if (captcha) {
+      if (userData?.password !== userData?.confirmPassword) {
+        setMessage("Password do not match");
+      } else {
+        dispatch(register(userData));
+      }
     }
   };
 
@@ -83,9 +106,13 @@ export const RegisterScreen = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="recaptcha">
-            <ReCAPTCHA sitekey={siteKey} />
+            <Reaptcha sitekey={siteKey} ref={captchaRef} onVerify={verify} />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button
+            disabled={captcha ? false : true}
+            variant="primary"
+            type="submit"
+          >
             Register
           </Button>
         </Form>

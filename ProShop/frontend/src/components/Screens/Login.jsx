@@ -1,15 +1,17 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import ReCAPTCHA from "react-google-recaptcha";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Reaptcha from "reaptcha";
 import { login } from "../../../REDUX/actions/userAction";
 import Loading from "../../Loading";
 import Message from "../../Message";
 import FormContainer from "../FormContainer/FormConatiner";
 
 export const Login = () => {
+  const [captcha, setCaptcha] = useState();
+  const captchaRef = useRef();
   const [userData, setUserData] = useState();
   const [siteKey, setSiteKey] = useState();
   const dispatch = useDispatch();
@@ -26,6 +28,16 @@ export const Login = () => {
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
+  };
+
+  //captcha verify
+  const verify = () => {
+    captchaRef.current
+      .getResponse()
+      .then((res) => setCaptcha(res))
+      .catch((err) => {
+        err.message;
+      });
   };
 
   useEffect(() => {
@@ -65,10 +77,14 @@ export const Login = () => {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="recaptcha">
-            <ReCAPTCHA sitekey={siteKey} />
+            <Reaptcha sitekey={siteKey} ref={captchaRef} onVerify={verify} />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button
+            disabled={captcha ? false : true}
+            variant="primary"
+            type="submit"
+          >
             Sign In
           </Button>
         </Form>
