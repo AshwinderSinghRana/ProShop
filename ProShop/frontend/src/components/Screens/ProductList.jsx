@@ -137,11 +137,11 @@ function ProductList() {
                     to={`/admin/product/${product._id}/edit`}
                     style={{ color: "orange" }}
                   >
-                    <i class="fa-regular fa-pen-to-square"></i>
+                    <i className="fa-regular fa-pen-to-square"></i>
                   </Link>
 
                   <i
-                    class="fa-solid fa-trash-can"
+                    className="fa-solid fa-trash-can"
                     style={{ color: "red" }}
                     onClick={(e) => deleteHandler(product._id)}
                   ></i>

@@ -86,7 +86,7 @@ function PlaceOrderScreen() {
                           />
                         </Col>
                         <Col>
-                          <Link to={`product${item.product}`}>{item.name}</Link>
+                          <Link to={`/${item.product}`}>{item.name}</Link>
                         </Col>
                         <Col md={4}>
                           {item.qty} X &#8377;{item.price} = &#8377;
