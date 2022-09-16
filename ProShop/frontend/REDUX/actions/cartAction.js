@@ -7,7 +7,7 @@ import {
 } from "../constants/cartConstant";
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
-  const { data } = await httpGet(`products/${id}`);
+  const { data } = await httpGet(`/product/getProduct/${id}`);
   dispatch({
     type: CART_ADD_ITEM,
     payload: {

@@ -16,6 +16,7 @@ import Message from "../../Message";
 
 function CartScreen() {
   const ID = useParams().id;
+  console.log(ID);
   const location = useLocation().search;
   const qty = new URLSearchParams(location).get("qty");
   const navigate = useNavigate();
