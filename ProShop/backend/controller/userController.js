@@ -27,14 +27,12 @@ const createUser = expressAsyncHandler(async (req, res) => {
   let hash = await bcrypt.hash(value.inputs.password, 10);
   try {
     let result = await User.create({ ...value.inputs, password: hash });
-    res
-      .status(201)
-      .send({
-        success: "New User Created",
-        name: result.name,
-        email: result.email,
-        isAdmin: result.isAdmin,
-      });
+    res.status(201).send({
+      success: "New User Created",
+      name: result.name,
+      email: result.email,
+      isAdmin: result.isAdmin,
+    });
   } catch (error) {
     res.status(400).send(error.message);
   }

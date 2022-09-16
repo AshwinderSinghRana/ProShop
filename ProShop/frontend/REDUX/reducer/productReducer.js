@@ -5,6 +5,13 @@ import {
   PRODUCT_LISTS_REQUEST,
   PRODUCT_LISTS_SUCCESS,
   PRODUCT_LISTS_FAILURE,
+  PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
+  PRODUCT_DELETE_FAILURE,
+  PRODUCT_CREATE_REQUEST,
+  PRODUCT_CREATE_SUCCESS,
+  PRODUCT_CREATE_FAILURE,
+  PRODUCT_CREATE_RESET,
 } from "../constants/productConstants";
 
 function productListReducer(state = { products: [] }, action) {
@@ -42,4 +49,49 @@ function productDetailReducer(state = { product: [] }, action) {
       return state;
   }
 }
-export { productDetailReducer, productListReducer };
+
+function productDeleteReducer(state = {}, action) {
+  switch (action.type) {
+    case PRODUCT_DELETE_REQUEST:
+      return { loading: true };
+
+    case PRODUCT_DELETE_SUCCESS:
+      return { loading: false, success: true, error: "" };
+
+    case PRODUCT_DELETE_FAILURE:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+}
+
+function productCreateReducer(state = {}, action) {
+  switch (action.type) {
+    case PRODUCT_CREATE_REQUEST:
+      return { loading: true };
+
+    case PRODUCT_CREATE_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        error: "",
+        product: action.payload,
+      };
+
+    case PRODUCT_CREATE_FAILURE:
+      return { loading: false, error: action.payload };
+
+    case PRODUCT_CREATE_RESET:
+      return {};
+
+    default:
+      return state;
+  }
+}
+export {
+  productDetailReducer,
+  productListReducer,
+  productDeleteReducer,
+  productCreateReducer,
+};

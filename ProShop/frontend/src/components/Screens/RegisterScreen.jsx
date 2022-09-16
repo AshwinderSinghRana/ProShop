@@ -27,6 +27,7 @@ export const RegisterScreen = () => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
+  //captcha  verify
   const verify = () => {
     captchaRef.current
       .getResponse()

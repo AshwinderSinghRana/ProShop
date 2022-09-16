@@ -7,7 +7,6 @@ import CheckOutStep from "../CheckOutStep/CheckOutStep";
 import FormContainer from "../FormContainer/FormConatiner";
 
 function PaymentScreen() {
-  const [userData, setUserData] = useState();
   const [paymentMethod, setPaymentMethod] = useState("PayPal");
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -23,10 +22,6 @@ function PaymentScreen() {
     dispatch(savePaymentMethod(paymentMethod));
     navigate("/placeorder");
   };
-
-  // const handleChange = (e) => {
-  //   setUserData({ ...userData, [e.target.name]: e.target.value });
-  // };
 
   return (
     <FormContainer>

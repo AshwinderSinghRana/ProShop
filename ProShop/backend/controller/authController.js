@@ -17,18 +17,19 @@ const verifyUser = asyncHandler(async (req, res) => {
     return failed(res, errorResponse);
   }
   //Use of Validator......................
-
   const user = await User.findOne({
     email: value.inputs.email,
   });
   if (user && (await bcrypt.compare(value.inputs.password, user.password))) {
+    const token = generateToken(user._id);
     res.json({
       id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
       isVerified: user.isVerified,
-      token: generateToken(user._id),
+      Login_time: (await token).time,
+      token: (await token).token,
     });
   } else {
     res.status(401);

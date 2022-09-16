@@ -2,7 +2,6 @@ import { Validator } from "node-input-validator";
 import { failed, checkValidation } from "./validator.js";
 
 export const authenticateHeader = async (req, res, next) => {
-  // console.log(req.headers, "--------in header check------------");
   const v = new Validator(req.headers, {
     secret_key: "required|string",
     publish_key: "required|string",
@@ -13,7 +12,6 @@ export const authenticateHeader = async (req, res, next) => {
   if (errorsResponse) {
     return failed(res, errorsResponse);
   }
-
   if (
     req.headers.secret_key !==
       "sk_JJ8voENYTUv8W96IpItK7JrEFEgAV6VPWSRYuJL7fDBHQUdE0EpVJjGUy+6Y3Slq4dmKmg==" ||

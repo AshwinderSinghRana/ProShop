@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import colors from "colors"
-
+import colors from "colors";
 
 async function connectDB() {
   try {
@@ -10,5 +9,4 @@ async function connectDB() {
     console.log("dhang se kr");
   }
 }
-
 export default connectDB;

@@ -75,11 +75,9 @@ export const Login = () => {
               placeholder="Password"
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="recaptcha">
             <Reaptcha sitekey={siteKey} ref={captchaRef} onVerify={verify} />
           </Form.Group>
-
           <Button
             disabled={captcha ? false : true}
             variant="primary"

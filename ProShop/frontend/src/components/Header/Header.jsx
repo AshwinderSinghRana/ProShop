@@ -38,7 +38,7 @@ function Header() {
                 <NavDropdown title={userInfo.name} id="username">
                   <LinkContainer to={"/profile"}>
                     <NavDropdown.Item>
-                      <i className="fa-solid fa-user"></i> Profile
+                      <i class="fa-solid fa-user-tie"></i> Profile
                     </NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Item onClick={(e) => dispatch(logoutHandler())}>
@@ -56,17 +56,17 @@ function Header() {
                 <NavDropdown title="Admin" id="adminmenu">
                   <LinkContainer to={"/admin/userlist"}>
                     <NavDropdown.Item>
-                      <i className="fa-solid fa-user"></i> Users
+                      <i class="fa-solid fa-user-plus"></i>Users
                     </NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to={"/admin/productlist"}>
                     <NavDropdown.Item>
-                      <i className="fa-solid fa-user"></i> Products
+                      <i class="fa-solid fa-box-open"></i> Products
                     </NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to={"/admin/orderlist"}>
                     <NavDropdown.Item>
-                      <i className="fa-solid fa-user"></i> Orders
+                      <i class="fa-brands fa-first-order"></i> Orders
                     </NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>

@@ -10,37 +10,22 @@ import routerOrder from "./routes/orderRoute.js";
 
 dotenv.config();
 const app = express();
-app.use(cors());
+const port = process.env.PORT;
 connectDB();
 
+app.use(cors());
 app.use(express.json());
-app.use("/products", productRoutes);
+app.use("/product", productRoutes);
 app.use("/user", userRoutes);
 app.use("/order", routerOrder);
 app.use("/config/paypal", (req, res) =>
   res.send(process.env.PAY_PAL_CLIENT_ID)
 );
-
 app.use("/config/secretkey", (req, res) =>
   res.send(process.env.CAPTCHA_SITE_KEY)
 );
 app.use(notFound);
 app.use(errorHandler);
-
-// //post route
-// router.post("/post", async (req, res) => {
-//   const { token } = req.body;
-//   await axios.post(
-//     `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.CAPTCHA_SITE_KEY}&response=${token}`
-//   );
-
-// if (res.status(200)) {
-//   res.send("Human");
-// } else {
-//   res.send("Robot");
-// }
-// });
-const port = process.env.PORT;
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`.red.bold);

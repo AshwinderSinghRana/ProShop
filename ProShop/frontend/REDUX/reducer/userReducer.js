@@ -41,6 +41,7 @@ export function userLoginReducer(state = {}, action) {
 
     case USER_LOGIN_FAILURE:
       return { loading: false, error: action.payload };
+
     case USER_LOGOUT:
       return {};
 
