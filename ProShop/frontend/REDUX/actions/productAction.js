@@ -93,8 +93,9 @@ const createProduct = () => async (dispatch, getState) => {
     } = getState();
 
     const { data } = await httpGet.post(
-      `/product/create`,
+      `/product`,
       {},
+
       {
         headers: {
           Authorization: `Bearer ${userInfo?.token}`,

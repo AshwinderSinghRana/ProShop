@@ -23,14 +23,14 @@ function ProductList() {
   const {
     loading: loadingDelete,
     error: errorDelete,
-    success: successCreate,
-    product: createdProduct,
+    success: successDelete,
   } = productDelete;
   const productCreate = useSelector((state) => state.productCreate);
   const {
     loading: loadingCreate,
     error: errorCreate,
-    success: successDelete,
+    success: successCreate,
+    product: createdProduct,
   } = productCreate;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -41,7 +41,7 @@ function ProductList() {
       navigate("/login");
     }
     if (successCreate) {
-      navigate(`/product/${createdProduct._id}/edit`);
+      navigate(`/admin/product/${createdProduct._id}/edit`);
     } else {
       dispatch(listProducts());
     }

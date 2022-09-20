@@ -16,6 +16,7 @@ import { GetOrderDetails } from "../src/components/Screens/OrderScreen";
 import UserListScreen from "./components/Screens/UserListScreen";
 import { UserEditScreen } from "./components/Screens/UserEditScreen";
 import ProductList from "./components/Screens/ProductList";
+import { ProductEditScreen } from "./components/Screens/ProductEditScreen";
 
 function App() {
   return (
@@ -39,6 +40,11 @@ function App() {
               <Route path="/admin/userlist" element={<UserListScreen />} />
               <Route path="/admin/productList" element={<ProductList />} />
               <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
+              <Route
+                path="/admin/product/:id/edit"
+                element={<ProductEditScreen />}
+              />
+
               <Route path="/cart" element={<CartScreen />} />
             </Route>
           </Routes>

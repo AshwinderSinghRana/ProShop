@@ -16,7 +16,7 @@ const verifyUser = asyncHandler(async (req, res) => {
   if (errorResponse) {
     return failed(res, errorResponse);
   }
-  //Use of Validator......................
+  //Use of Validator end......................
   const user = await User.findOne({
     email: value.inputs.email,
   });

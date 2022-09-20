@@ -59,12 +59,13 @@ const productDeleteByAdmin = expressAsyncHandler(async (req, res) => {
     throw new Error("product Not found");
   }
 });
+
 const createProductByAdmin = expressAsyncHandler(async (req, res) => {
-  let product = new Product({
+  const product = new Product({
     name: "Sample Name",
     price: 0,
     user: req.user._id,
-    image: "/image/sample.jpg", //error
+    image: "images/sample.jpg", //error.....
     brand: "Sample Brand",
     category: "Sample Category",
     countInStock: 0,
@@ -74,6 +75,7 @@ const createProductByAdmin = expressAsyncHandler(async (req, res) => {
   const createdProduct = await product.save();
   res.status(201).json(createdProduct);
 });
+
 const updateProductByAdmin = expressAsyncHandler(async (req, res) => {
   const { name, price, description, image, brand, category, countInStock } =
     req.body;
@@ -94,6 +96,7 @@ const updateProductByAdmin = expressAsyncHandler(async (req, res) => {
     throw new Error("Product Not Found");
   }
 });
+
 export {
   createProduct,
   deleteProduct,

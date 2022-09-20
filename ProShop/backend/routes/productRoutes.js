@@ -2,6 +2,7 @@ import express from "express";
 import upload from "../config/multer.js";
 import {
   createProduct,
+  createProductByAdmin,
   getProduct,
   getProducts,
   productDeleteByAdmin,
@@ -13,6 +14,13 @@ const router = express.Router();
 
 router.get("/getall", getProducts);
 router.post("/create", upload.single("image"), createProduct);
+router.post(
+  "/create",
+  upload.single("image"),
+  authMiddleware,
+  admin,
+  createProductByAdmin
+);
 router.route("/getProduct/:id").get(getProduct);
 router.delete(
   "/removeProduct/:id",

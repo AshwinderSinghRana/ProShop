@@ -71,7 +71,7 @@ function productCreateReducer(state = {}, action) {
     case PRODUCT_CREATE_REQUEST:
       return { loading: true };
 
-    case PRODUCT_CREATE_SUCCESS:
+    case PRODUCT_CREATE_SUCCESs:
       return {
         loading: false,
         success: true,
