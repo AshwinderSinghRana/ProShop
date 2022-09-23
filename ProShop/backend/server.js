@@ -10,8 +10,8 @@ import routerOrder from "./routes/orderRoute.js";
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT;
 connectDB();
+const port = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
@@ -24,6 +24,7 @@ app.use("/config/paypal", (req, res) =>
 app.use("/config/secretkey", (req, res) =>
   res.send(process.env.CAPTCHA_SITE_KEY)
 );
+
 app.use(notFound);
 app.use(errorHandler);
 
