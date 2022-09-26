@@ -85,11 +85,11 @@ export const GetOrderDetails = () => {
                 <p>
                   {order.isDelivered ? (
                     <Message
-                      varient="danger"
-                      children={"Not Delivered So Far"}
+                      varient={"success"}
+                      children={`Delivered on ${order.deliveredAt}`}
                     />
                   ) : (
-                    <Alert variant="danger">{`Delivered on ${order.deliveredAt}`}</Alert>
+                    <Alert variant="danger">Not Deleiverd yet</Alert>
                   )}
                 </p>
               </p>

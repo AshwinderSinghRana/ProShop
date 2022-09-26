@@ -23,16 +23,16 @@ routerUser
   .get(authMiddleware, getUserProfile)
   .put(authMiddleware, updateUserProfile);
 routerUser.route("/getUsers").get(authMiddleware, admin, getUsers);
-routerUser
-  .route("/:id")
-  .delete(authMiddleware, admin, deleteUser)
-  .get(authMiddleware, admin, getUserById)
-  .put(authMiddleware, admin, updateUserByAdmin);
 routerUser.put("/update/:id", updateUserByAdmin);
 routerUser.post("/create", createUser);
 routerUser.get("/getUser/:id", getUser);
 // routerUser.route("/getAllUsers/").get(authMiddleware, getAllUser);
 routerUser.post("/login", authenticateHeader, verifyUser);
 routerUser.route("/register").post(registerUser);
+routerUser
+  .route("/:id")
+  .delete(authMiddleware, admin, deleteUser)
+  .get(authMiddleware, admin, getUserById)
+  .put(authMiddleware, admin, updateUserByAdmin);
 
 export default routerUser;
